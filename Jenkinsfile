@@ -1,11 +1,11 @@
-pipeline{
+pipeline {
   agent any
 
-  tools{
+  tools {
     maven 'M3'
     jdk 'JDK21'
   }
-  environment{
+  environment {
       DOCKERHUB_CREDENTIALS = credentials('dockerCredential')
   }
 
@@ -16,7 +16,7 @@ pipeline{
           git url: 'https://github.com/ChangJiWoong/spring-petclinic.git/', branch: 'main'
       }
     }
-  }
+    
     // Maven Build
     stage('Maver Build') {
       steps {
@@ -42,8 +42,6 @@ pipeline{
         echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
         docker push changjiwoong/spring-petclinic:latest
         """
-        
-
       }
     }
 
@@ -56,6 +54,7 @@ pipeline{
         """
       }
     }
+  }
 }
       
   
